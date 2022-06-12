@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<templates id="minecraft_tellraw_field_templates" xml:space="preserve">
+
+    <t t-name="FieldMinecraftTellraw">
+        <div class="dropdown">
+            <a
+        class="btn btn-primary dropdown-toggle"
+        href="#"
+        role="button"
+        id="dropdownMenuLink"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+      >
+                Add Text
+            </a>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <a class="dropdown-item" href="#">Text</a>
+                <a class="dropdown-item" href="#">Selector</a>
+                <a class="dropdown-item" href="#">Scoreboard Objective</a>
+                <a class="dropdown-item" href="#">NBT Storage</a>
+                <a class="dropdown-item" href="#">Keybind</a>
+                <a class="dropdown-item" href="#">Translation</a>
+                <a class="dropdown-item" href="#">Line Break</a>
+            </div>
+        </div>
+    </t>
+
+</templates>
