@@ -15,14 +15,22 @@
                 Add Text
             </a>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <a class="dropdown-item" href="#">Text</a>
-                <a class="dropdown-item" href="#">Selector</a>
-                <a class="dropdown-item" href="#">Scoreboard Objective</a>
-                <a class="dropdown-item" href="#">NBT Storage</a>
-                <a class="dropdown-item" href="#">Keybind</a>
-                <a class="dropdown-item" href="#">Translation</a>
-                <a class="dropdown-item" href="#">Line Break</a>
+                <button class="dropdown-item" name="text">Text</button>
+                <button class="dropdown-item" name="lineBreak">Line Break</button>
             </div>
+        </div>
+    </t>
+
+    <t t-name="FieldMinecraftTellrawText">
+        <div class="form-group">
+            <label for="text">Text</label>
+            <input
+        type="text"
+        class="form-control"
+        id="text"
+        name="text"
+        placeholder="Text"
+      />
         </div>
     </t>
 
