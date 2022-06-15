@@ -12,11 +12,10 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
     description: _lt("Minecraft Tellraw Field"),
     supportedFieldTypes: ["serialized"],
     template: "FieldMinecraftTellraw",
-    _render: function () {
-      this._super.apply(this, arguments);
-      this.$el.find("button[name='text']").on("click", this.openText);
-      this.$el.find("button[name='lineBreak']").on("click", this.openLineBreak);
-    },
+    events: _.extend({}, AbstractField.prototype.events, {
+      "click button[name='text']": "openText",
+      "click button[name='lineBreak']": "openLineBreak",
+    }),
     openText: function () {
       console.log("openText");
       new Dialog(this, {

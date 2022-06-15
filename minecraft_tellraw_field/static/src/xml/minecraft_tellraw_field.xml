@@ -22,16 +22,177 @@
     </t>
 
     <t t-name="FieldMinecraftTellrawText">
-        <div class="form-group">
-            <label for="text">Text</label>
-            <input
-        type="text"
-        class="form-control"
-        id="text"
-        name="text"
-        placeholder="Text"
-      />
-        </div>
+        <form>
+            <div class="row">
+                <div class="col">
+                    <h2>Preview:</h2>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="text">Text</label>
+                        <input
+              type="text"
+              class="form-control"
+              id="text"
+              name="text"
+              placeholder="Text"
+            />
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col">
+                    <h2>Formatting Options:</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="color">Color</label>
+                        <input
+              type="color"
+              class="form-control"
+              id="color"
+              name="color"
+              style="width: 80px;"
+            />
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="bold">Bold</label>
+                                <input
+                  type="checkbox"
+                  class="form-control"
+                  id="bold"
+                  name="bold"
+                />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="italic">Italic</label>
+                                <input
+                  type="checkbox"
+                  class="form-control"
+                  id="italic"
+                  name="italic"
+                />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="underlined">Underlined</label>
+                                <input
+                  type="checkbox"
+                  class="form-control"
+                  id="underlined"
+                  name="underlined"
+                />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="strikethrough">Strikethrough</label>
+                                <input
+                  type="checkbox"
+                  class="form-control"
+                  id="strikethrough"
+                  name="strikethrough"
+                />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="obfuscated">Obfuscated</label>
+                                <input
+                  type="checkbox"
+                  class="form-control"
+                  id="obfuscated"
+                  name="obfuscated"
+                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="custom-font">Custom Font</label>
+                        <input
+              type="checkbox"
+              class="form-control"
+              id="custom-font"
+              name="custom-font"
+            />
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <h2 for="click-event">Click Event:</h2>
+                        <select
+              class="form-control"
+              id="click-event"
+              name="click-event"
+            >
+                            <option value="none">None</option>
+                            <option value="open-url">Open URL</option>
+                            <option value="run-command">Run Command</option>
+                            <option value="suggest-command">Suggest Command</option>
+                            <option value="copy-to-clipboard">Copy to Clipboard</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <h2 for="hover-event">Hover Event:</h2>
+                        <select
+              class="form-control"
+              id="hover-event"
+              name="hover-event"
+            >
+                            <option value="none">None</option>
+                            <option value="show-item">Show Entity</option>
+                            <option value="show-item">Show Item</option>
+                            <option value="show-text">Show Text</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <h2 for="insertion">Insertion:</h2>
+                        <input
+              type="text"
+              class="form-control"
+              id="insertion"
+              name="insertion"
+            />
+                    </div>
+                </div>
+            </div>
+        </form>
     </t>
 
 </templates>
