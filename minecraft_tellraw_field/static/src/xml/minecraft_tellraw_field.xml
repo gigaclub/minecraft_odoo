@@ -66,78 +66,108 @@
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
-                                <label for="bold">Bold</label>
-                                <input
-                  type="checkbox"
-                  class="form-control"
-                  id="bold"
-                  name="bold"
-                />
+                                <div class="form-check">
+                                    <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="bold"
+                    name="bold"
+                  />
+                                    <label
+                    class="form-check-label"
+                    for="bold"
+                  >Bold</label>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
-                                <label for="italic">Italic</label>
-                                <input
-                  type="checkbox"
-                  class="form-control"
-                  id="italic"
-                  name="italic"
-                />
+                                <div class="form-check">
+                                    <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="italic"
+                    name="italic"
+                  />
+                                    <label
+                    class="form-check-label"
+                    for="italic"
+                  >Italic</label>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
-                                <label for="underlined">Underlined</label>
-                                <input
-                  type="checkbox"
-                  class="form-control"
-                  id="underlined"
-                  name="underlined"
-                />
+                                <div class="form-check">
+                                    <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="underlined"
+                    name="underlined"
+                  />
+                                    <label
+                    class="form-check-label"
+                    for="underlined"
+                  >Underlined</label>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
-                                <label for="strikethrough">Strikethrough</label>
-                                <input
-                  type="checkbox"
-                  class="form-control"
-                  id="strikethrough"
-                  name="strikethrough"
-                />
+                                <div class="form-check">
+                                    <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="strikethrough"
+                    name="strikethrough"
+                  />
+                                    <label
+                    class="form-check-label"
+                    for="strikethrough"
+                  >Strikethrough</label>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
-                                <label for="obfuscated">Obfuscated</label>
-                                <input
-                  type="checkbox"
-                  class="form-control"
-                  id="obfuscated"
-                  name="obfuscated"
-                />
+                                <div class="form-check">
+                                    <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="obfuscated"
+                    name="obfuscated"
+                  />
+                                    <label
+                    class="form-check-label"
+                    for="obfuscated"
+                  >Obfuscated</label>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label for="custom-font">Custom Font</label>
-                        <input
-              type="checkbox"
-              class="form-control"
-              id="custom-font"
-              name="custom-font"
-            />
+                        <div class="form-check">
+                            <input
+                type="checkbox"
+                class="form-check-input"
+                id="custom-font"
+                name="custom-font"
+              />
+                            <label
+                class="form-check-label"
+                for="custom-font"
+              >Custom Font</label>
+                        </div>
                     </div>
                 </div>
             </div>
