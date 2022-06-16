@@ -1,32 +1,39 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <templates id="minecraft_tellraw_field_templates" xml:space="preserve">
 
-    <t t-name="FieldMinecraftTellraw" owl="1">
+    <t t-name="MinecraftTellrawDropdown" owl="1">
         <div class="dropdown">
-            <a
-        class="btn btn-primary dropdown-toggle"
-        href="#"
-        role="button"
-        id="dropdownMenuLink"
-        data-toggle="dropdown"
-        aria-haspopup="true"
-        aria-expanded="false"
-      >
-                Add Text
-            </a>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <button
-          class="dropdown-item"
-          name="text"
-          t-on-click="openText"
-        >Text</button>
-                <button
-          class="dropdown-item"
-          name="lineBreak"
-          t-on-click="openLineBreak"
-        >Line Break</button>
+            <div class="row">
+                <div class="col">
+                    <button
+            class="btn btn-primary dropdown-toggle"
+            type="button"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+            t-on-click="onClickOpenDropdown"
+          >
+                        Add Text
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <button
+              class="dropdown-item"
+              name="text"
+              t-on-click="openText"
+            >Text</button>
+                        <button
+              class="dropdown-item"
+              name="lineBreak"
+              t-on-click="openLineBreak"
+            >Line Break</button>
+                    </div>
+                </div>
             </div>
         </div>
+    </t>
+
+    <t t-name="FieldMinecraftTellraw" owl="1">
+        <t t-call="MinecraftTellrawDropdown" />
         <t t-if="state.minecraftTellrawTextDialog">
             <MinecraftTellrawDialog
         t-on-dialog-closed="onDialogClosedModerationDiscard"
@@ -241,7 +248,14 @@
                             </select>
                         </div>
                     </div>
-                    <t t-if="state.hoverEvent">
+                    <t t-if="state.hoverEvent === 'show_text'">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <t t-call="MinecraftTellrawDropdown" />
+                            </div>
+                        </div>
+                    </t>
+                    <t t-elif="state.hoverEvent">
                         <div class="col-6">
                             <div class="form-group">
                                 <input
