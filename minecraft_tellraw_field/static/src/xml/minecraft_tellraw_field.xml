@@ -186,15 +186,27 @@
                                 <input
                   type="checkbox"
                   class="form-check-input"
-                  id="font"
-                  name="font"
+                  id="custom-font"
+                  name="custom-font"
+                  t-on-change="onChangeCustomFont"
                 />
                                 <label
                   class="form-check-label"
-                  for="font"
+                  for="custom-font"
                 >Custom Font</label>
                             </div>
                         </div>
+                        <t t-if="state.customFont">
+                            <div class="form-group">
+                                <input
+                  type="text"
+                  class="form-control"
+                  id="font"
+                  name="font"
+                  value="minecraft:default"
+                />
+                            </div>
+                        </t>
                     </div>
                 </div>
                 <hr />

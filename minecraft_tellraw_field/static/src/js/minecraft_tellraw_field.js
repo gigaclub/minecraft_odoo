@@ -10,8 +10,6 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
   const {Component} = owl;
   const {useState, useRef} = owl.hooks;
 
-  const values = [""];
-
   class MinecraftTellrawDialog extends Component {
     constructor(...args) {
       super(...args);
@@ -19,8 +17,9 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
       this.state = useState({
         clickEvent: false,
         hoverEvent: false,
+        customFont: false,
       });
-      console.log(this._dialogRef);
+      this.values = this.__owl__.parent.state.values;
     }
     buildValues(event) {
       const $element = $(event.target.parentElement.parentElement);
@@ -53,9 +52,12 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
       if (obfuscated) {
         value.obfuscated = true;
       }
-      const font = $element.find("#font").val();
-      if (font) {
-        value.font = font;
+      const customFont = $element.find("#custom-font").val();
+      if (customFont) {
+        const font = $element.find("#font").val();
+        if (font) {
+          value.font = font;
+        }
       }
       const clickEvent = $element.find("#click-event").val();
       if (clickEvent && clickEvent !== "none") {
@@ -71,7 +73,7 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
           value: $element.find(`[name=${hoverEvent}]`).val(),
         };
       }
-      values.push(value);
+      this.values.push(value);
     }
     onChangeClickEvent(event) {
       const value = event.target.value;
@@ -87,6 +89,14 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
         this.state.hoverEvent = value;
       } else {
         this.state.hoverEvent = false;
+      }
+    }
+    onChangeCustomFont(event) {
+      const value = event.target.checked;
+      if (value) {
+        this.state.customFont = value;
+      } else {
+        this.state.customFont = false;
       }
     }
     onClickSave(event) {
@@ -119,6 +129,7 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
       super(...args);
       this.state = useState({
         minecraftTellrawTextDialog: false,
+        values: [""],
       });
     }
     openText(event) {
@@ -126,11 +137,11 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
       this.state.minecraftTellrawTextDialog = true;
     }
     openLineBreak() {
-      values.push("\n");
-      console.log(values);
+      this.state.values.push("\n");
+      console.log(this.state.values);
     }
     onDialogClosedModerationDiscard() {
-      console.log(values);
+      console.log(this.state.values);
       this.state.minecraftTellrawTextDialog = false;
     }
     onClickOpenDropdown() {
