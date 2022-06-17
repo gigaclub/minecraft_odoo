@@ -18,6 +18,7 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
         clickEvent: false,
         hoverEvent: false,
         customFont: false,
+        defaultColor: true,
       });
       this.values = this.__owl__.parent.state.values;
     }
@@ -28,9 +29,12 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
       if (text) {
         value.text = text;
       }
-      const color = $element.find("#color").val();
-      if (color) {
-        value.color = color;
+      const defaultColor = $element.find("#default-color").prop("checked");
+      if (!defaultColor) {
+        const color = $element.find("#color").val();
+        if (color) {
+          value.color = color;
+        }
       }
       const bold = $element.find("#bold").prop("checked");
       if (bold) {
@@ -99,6 +103,14 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
         this.state.customFont = false;
       }
     }
+    onChangeDefaultColor(event) {
+      const value = event.target.checked;
+      if (value) {
+        this.state.defaultColor = value;
+      } else {
+        this.state.defaultColor = false;
+      }
+    }
     onClickSave(event) {
       this.buildValues(event);
       this._dialogRef.comp._close();
@@ -106,14 +118,11 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
     onClickCancel() {
       this._dialogRef.comp._close();
     }
-    onClickOpenDropdown(event) {
-      const $element = $(event.target);
-      console.log($element.attr("aria-expanded"));
-      if ($element.attr("aria-expanded") === "true") {
-        $element.dropdown("hide");
-      } else {
-        $element.dropdown("toggle");
-      }
+    openText() {
+      console.log("openText");
+    }
+    openLineBreak() {
+      console.log("openLineBreak");
     }
   }
 
@@ -143,9 +152,6 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
     onDialogClosedModerationDiscard() {
       console.log(this.state.values);
       this.state.minecraftTellrawTextDialog = false;
-    }
-    onClickOpenDropdown() {
-      console.log("test");
     }
   }
 
