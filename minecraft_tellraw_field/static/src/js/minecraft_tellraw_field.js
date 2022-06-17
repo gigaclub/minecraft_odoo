@@ -10,6 +10,22 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
   const {Component} = owl;
   const {useState, useRef} = owl.hooks;
 
+  class MinecraftTellrawHoverEventTextDialog extends Component {
+    constructor(props) {
+      super(props);
+    }
+    onDialogClosedModerationDiscard() {
+      console.log("test");
+    }
+  }
+
+  Object.assign(MinecraftTellrawHoverEventTextDialog, {
+    components: {
+      Dialog: OwlDialog,
+    },
+    template: "MinecraftTellrawHoverEventTextDialog",
+  });
+
   class MinecraftTellrawDialog extends Component {
     constructor(...args) {
       super(...args);
@@ -19,6 +35,7 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
         hoverEvent: false,
         customFont: false,
         defaultColor: true,
+        minecraftTellrawHoverEventTextDialog: false,
       });
       this.values = this.__owl__.parent.state.values;
     }
@@ -28,6 +45,8 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
       const text = $element.find("#text").val();
       if (text) {
         value.text = text;
+      } else {
+        value.text = "";
       }
       const defaultColor = $element.find("#default-color").prop("checked");
       if (!defaultColor) {
@@ -94,6 +113,9 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
       } else {
         this.state.hoverEvent = false;
       }
+      $(document).ready(function () {
+        $(".dropdown-toggle").dropdown();
+      });
     }
     onChangeCustomFont(event) {
       const value = event.target.checked;
@@ -120,6 +142,7 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
     }
     openText() {
       console.log("openText");
+      this.state.minecraftTellrawHoverEventTextDialog = true;
     }
     openLineBreak() {
       console.log("openLineBreak");
@@ -129,6 +152,7 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
   Object.assign(MinecraftTellrawDialog, {
     components: {
       Dialog: OwlDialog,
+      MinecraftTellrawHoverEventTextDialog,
     },
     template: "FieldMinecraftTellrawText",
   });

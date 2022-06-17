@@ -42,7 +42,7 @@
 
     <t t-name="FieldMinecraftTellrawText" owl="1">
         <Dialog
-      contentClass="'o_ModerationDiscardDialog'"
+      contentClass="'o_MinecraftTellrawDialog'"
       title="AddText"
       size="'large'"
       t-ref="dialog"
@@ -304,6 +304,22 @@
           t-on-click="onClickCancel"
         >Cancel</button>
             </t>
+        </Dialog>
+        <t t-if="state.minecraftTellrawHoverEventTextDialog">
+            <MinecraftTellrawHoverEventTextDialog
+        t-on-dialog-closed="onDialogClosedModerationDiscard"
+      />
+        </t>
+    </t>
+
+    <t t-name="MinecraftTellrawHoverEventTextDialog" owl="1">
+        <Dialog
+      contentClass="'o_MinecraftTellrawHoverEventTextDialog'"
+      title="AddText"
+      size="'large'"
+      t-ref="dialog"
+    >
+            test
         </Dialog>
     </t>
 
