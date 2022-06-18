@@ -34,9 +34,7 @@
     <t t-name="FieldMinecraftTellraw" owl="1">
         <t t-call="MinecraftTellrawDropdown" />
         <t t-if="state.minecraftTellrawTextDialog">
-            <MinecraftTellrawDialog
-        t-on-dialog-closed="onDialogClosedModerationDiscard"
-      />
+            <MinecraftTellrawDialog t-on-dialog-closed="onDialogClosed" />
         </t>
     </t>
 
@@ -47,253 +45,268 @@
       size="'large'"
       t-ref="dialog"
     >
-            <form>
-                <div class="row">
-                    <div class="col">
-                        <h2>Preview:</h2>
+            <div class="row">
+                <div class="col">
+                    <h2>Preview:</h2>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="text">Text</label>
+                        <input
+              type="text"
+              class="form-control"
+              id="text"
+              name="text"
+              placeholder="Text"
+              t-on-change="onChangeText"
+              t-att-value="state.value.text"
+            />
                     </div>
                 </div>
-                <hr />
-                <div class="row">
-                    <div class="col">
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col">
+                    <h2>Formatting Options:</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <div class="form-check">
+                            <input
+                type="checkbox"
+                class="form-check-input"
+                id="default-color"
+                name="default-color"
+                checked="1"
+                t-on-change="onChangeDefaultColor"
+                t-att-checked="state.value.defaultColor"
+              />
+                            <label for="color">Default Color</label>
+                        </div>
+                    </div>
+                    <t t-if="!state.defaultColor">
                         <div class="form-group">
-                            <label for="text">Text</label>
+                            <label for="color">Color</label>
+                            <input
+                type="color"
+                class="form-control"
+                id="color"
+                name="color"
+                style="width: 80px;height: 80px;"
+                t-on-change="onChangeColor"
+                t-att-value="state.value.color"
+              />
+                        </div>
+                    </t>
+                </div>
+                <div class="col-md-3">
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <div class="form-check">
+                                    <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="bold"
+                    name="bold"
+                    t-on-change="onChangeBold"
+                    t-att-checked="state.value.bold"
+                  />
+                                    <label
+                    class="form-check-label"
+                    for="bold"
+                  >Bold</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <div class="form-check">
+                                    <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="italic"
+                    name="italic"
+                    t-on-change="onChangeItalic"
+                    t-att-checked="state.value.italic"
+                  />
+                                    <label
+                    class="form-check-label"
+                    for="italic"
+                  >Italic</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <div class="form-check">
+                                    <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="underlined"
+                    name="underlined"
+                    t-on-change="onChangeUnderlined"
+                    t-att-checked="state.value.underlined"
+                  />
+                                    <label
+                    class="form-check-label"
+                    for="underlined"
+                  >Underlined</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <div class="form-check">
+                                    <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="strikethrough"
+                    name="strikethrough"
+                    t-on-change="onChangeStrikethrough"
+                    t-att-checked="state.value.strikethrough"
+                  />
+                                    <label
+                    class="form-check-label"
+                    for="strikethrough"
+                  >Strikethrough</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <div class="form-check">
+                                    <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="obfuscated"
+                    name="obfuscated"
+                    t-on-change="onChangeObfuscated"
+                    t-att-checked="state.value.obfuscated"
+                  />
+                                    <label
+                    class="form-check-label"
+                    for="obfuscated"
+                  >Obfuscated</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <div class="form-check">
+                            <input
+                type="checkbox"
+                class="form-check-input"
+                id="custom-font"
+                name="custom-font"
+                t-on-change="onChangeCustomFont"
+                t-att-checked="state.value.customFont"
+              />
+                            <label
+                class="form-check-label"
+                for="custom-font"
+              >Custom Font</label>
+                        </div>
+                    </div>
+                    <t t-if="state.customFont">
+                        <div class="form-group">
                             <input
                 type="text"
                 class="form-control"
-                id="text"
-                name="text"
-                placeholder="Text"
+                id="font"
+                name="font"
+                t-att-value="state.value.font || 'minecraft:default'"
+                t-on-change="onChangeFont"
+              />
+                        </div>
+                    </t>
+                </div>
+            </div>
+            <hr />
+            <h2>Click Event:</h2>
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <select
+              class="form-control"
+              id="click-event"
+              name="click-event"
+              t-on-change="onChangeClickEvent"
+              t-att-value="state.clickEvent || 'none'"
+            >
+                            <option value="none">None</option>
+                            <option value="open_url">Open URL</option>
+                            <option value="run_command">Run Command</option>
+                            <option value="suggest_command">Suggest Command</option>
+                            <option value="copy_to_clipboard">Copy to Clipboard</option>
+                        </select>
+                    </div>
+                </div>
+                <t t-if="state.clickEvent">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <input
+                type="text"
+                class="form-control"
+                t-att-name="state.clickEvent"
               />
                         </div>
                     </div>
-                </div>
-                <hr />
-                <div class="row">
-                    <div class="col">
-                        <h2>Formatting Options:</h2>
+                </t>
+            </div>
+            <hr />
+            <h2>Hover Event:</h2>
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <select
+              class="form-control"
+              id="hover-event"
+              name="hover-event"
+              t-on-change="onChangeHoverEvent"
+              t-att-value="state.hoverEvent || 'none'"
+            >
+                            <option value="none">None</option>
+                            <option value="show_entity">Show Entity</option>
+                            <option value="show_item">Show Item</option>
+                            <option value="show_text">Show Text</option>
+                        </select>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-3">
+                <t t-if="state.hoverEvent === 'show_text'">
+                    <div class="col-6">
                         <div class="form-group">
-                            <div class="form-check">
-                                <input
-                  type="checkbox"
-                  class="form-check-input"
-                  id="default-color"
-                  name="default-color"
-                  checked="1"
-                  t-on-change="onChangeDefaultColor"
-                />
-                                <label for="color">Default Color</label>
-                            </div>
-                        </div>
-                        <t t-if="!state.defaultColor">
-                            <div class="form-group">
-                                <label for="color">Color</label>
-                                <input
-                  type="color"
-                  class="form-control"
-                  id="color"
-                  name="color"
-                  style="width: 80px;height: 80px;"
-                />
-                            </div>
-                        </t>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group">
-                                    <div class="form-check">
-                                        <input
-                      type="checkbox"
-                      class="form-check-input"
-                      id="bold"
-                      name="bold"
-                    />
-                                        <label
-                      class="form-check-label"
-                      for="bold"
-                    >Bold</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group">
-                                    <div class="form-check">
-                                        <input
-                      type="checkbox"
-                      class="form-check-input"
-                      id="italic"
-                      name="italic"
-                    />
-                                        <label
-                      class="form-check-label"
-                      for="italic"
-                    >Italic</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group">
-                                    <div class="form-check">
-                                        <input
-                      type="checkbox"
-                      class="form-check-input"
-                      id="underlined"
-                      name="underlined"
-                    />
-                                        <label
-                      class="form-check-label"
-                      for="underlined"
-                    >Underlined</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group">
-                                    <div class="form-check">
-                                        <input
-                      type="checkbox"
-                      class="form-check-input"
-                      id="strikethrough"
-                      name="strikethrough"
-                    />
-                                        <label
-                      class="form-check-label"
-                      for="strikethrough"
-                    >Strikethrough</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group">
-                                    <div class="form-check">
-                                        <input
-                      type="checkbox"
-                      class="form-check-input"
-                      id="obfuscated"
-                      name="obfuscated"
-                    />
-                                        <label
-                      class="form-check-label"
-                      for="obfuscated"
-                    >Obfuscated</label>
-                                    </div>
-                                </div>
-                            </div>
+                            <t t-call="MinecraftTellrawDropdown" />
                         </div>
                     </div>
-                    <div class="col-md-3">
+                </t>
+                <t t-elif="state.hoverEvent">
+                    <div class="col-6">
                         <div class="form-group">
-                            <div class="form-check">
-                                <input
-                  type="checkbox"
-                  class="form-check-input"
-                  id="custom-font"
-                  name="custom-font"
-                  t-on-change="onChangeCustomFont"
-                />
-                                <label
-                  class="form-check-label"
-                  for="custom-font"
-                >Custom Font</label>
-                            </div>
-                        </div>
-                        <t t-if="state.customFont">
-                            <div class="form-group">
-                                <input
-                  type="text"
-                  class="form-control"
-                  id="font"
-                  name="font"
-                  value="minecraft:default"
-                />
-                            </div>
-                        </t>
-                    </div>
-                </div>
-                <hr />
-                <h2>Click Event:</h2>
-                <div class="row">
-                    <div class="col">
-                        <div class="form-group">
-                            <select
+                            <input
+                type="text"
                 class="form-control"
-                id="click-event"
-                name="click-event"
-                t-on-change="onChangeClickEvent"
-              >
-                                <option value="none">None</option>
-                                <option value="open_url">Open URL</option>
-                                <option value="run_command">Run Command</option>
-                                <option value="suggest_command">Suggest Command</option>
-                                <option
-                  value="copy_to_clipboard"
-                >Copy to Clipboard</option>
-                            </select>
+                t-att-name="state.hoverEvent"
+              />
                         </div>
                     </div>
-                    <t t-if="state.clickEvent">
-                        <div class="col-6">
-                            <div class="form-group">
-                                <input
-                  type="text"
-                  class="form-control"
-                  t-attf-name="{{ state.clickEvent }}"
-                />
-                            </div>
-                        </div>
-                    </t>
-                </div>
-                <hr />
-                <h2>Hover Event:</h2>
-                <div class="row">
-                    <div class="col">
-                        <div class="form-group">
-                            <select
-                class="form-control"
-                id="hover-event"
-                name="hover-event"
-                t-on-change="onChangeHoverEvent"
-              >
-                                <option value="none">None</option>
-                                <option value="show_entity">Show Entity</option>
-                                <option value="show_item">Show Item</option>
-                                <option value="show_text">Show Text</option>
-                            </select>
-                        </div>
-                    </div>
-                    <t t-if="state.hoverEvent === 'show_text'">
-                        <div class="col-6">
-                            <div class="form-group">
-                                <t t-call="MinecraftTellrawDropdown" />
-                            </div>
-                        </div>
-                    </t>
-                    <t t-elif="state.hoverEvent">
-                        <div class="col-6">
-                            <div class="form-group">
-                                <input
-                  type="text"
-                  class="form-control"
-                  t-attf-name="{{ state.hoverEvent }}"
-                />
-                            </div>
-                        </div>
-                    </t>
-                </div>
-            </form>
+                </t>
+            </div>
             <t t-set-slot="buttons">
                 <button
           class="o-reject btn btn-primary"
@@ -306,9 +319,7 @@
             </t>
         </Dialog>
         <t t-if="state.minecraftTellrawHoverEventTextDialog">
-            <MinecraftTellrawHoverEventTextDialog
-        t-on-dialog-closed="onDialogClosedModerationDiscard"
-      />
+            <MinecraftTellrawHoverEventTextDialog t-on-dialog-closed="onDialogClosed" />
         </t>
     </t>
 

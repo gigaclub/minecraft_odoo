@@ -13,8 +13,6 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
   class MinecraftTellrawHoverEventTextDialog extends Component {
     constructor(props) {
       super(props);
-    }
-    onDialogClosedModerationDiscard() {
       console.log("test");
     }
   }
@@ -36,67 +34,31 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
         customFont: false,
         defaultColor: true,
         minecraftTellrawHoverEventTextDialog: false,
+        value: {},
       });
       this.values = this.__owl__.parent.state.values;
     }
+    patched() {
+      this._reInitDropdown();
+      console.log(this.values);
+      console.log(this.state.value);
+    }
     buildValues(event) {
       const $element = $(event.target.parentElement.parentElement);
-      const value = {};
-      const text = $element.find("#text").val();
-      if (text) {
-        value.text = text;
-      } else {
-        value.text = "";
-      }
-      const defaultColor = $element.find("#default-color").prop("checked");
-      if (!defaultColor) {
-        const color = $element.find("#color").val();
-        if (color) {
-          value.color = color;
-        }
-      }
-      const bold = $element.find("#bold").prop("checked");
-      if (bold) {
-        value.bold = true;
-      }
-      const italic = $element.find("#italic").prop("checked");
-      if (italic) {
-        value.italic = true;
-      }
-      const underlined = $element.find("#underlined").prop("checked");
-      if (underlined) {
-        value.underlined = true;
-      }
-      const strikethrough = $element.find("#strikethrough").prop("checked");
-      if (strikethrough) {
-        value.strikethrough = true;
-      }
-      const obfuscated = $element.find("#obfuscated").prop("checked");
-      if (obfuscated) {
-        value.obfuscated = true;
-      }
-      const customFont = $element.find("#custom-font").val();
-      if (customFont) {
-        const font = $element.find("#font").val();
-        if (font) {
-          value.font = font;
-        }
-      }
       const clickEvent = $element.find("#click-event").val();
       if (clickEvent && clickEvent !== "none") {
-        value.clickEvent = {
+        this.state.value.clickEvent = {
           action: clickEvent,
           value: $element.find(`[name=${clickEvent}]`).val(),
         };
       }
       const hoverEvent = $element.find("#hover-event").val();
       if (hoverEvent && hoverEvent !== "none") {
-        value.hoverEvent = {
+        this.state.value.hoverEvent = {
           action: hoverEvent,
           value: $element.find(`[name=${hoverEvent}]`).val(),
         };
       }
-      this.values.push(value);
     }
     onChangeClickEvent(event) {
       const value = event.target.value;
@@ -113,9 +75,6 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
       } else {
         this.state.hoverEvent = false;
       }
-      $(document).ready(function () {
-        $(".dropdown-toggle").dropdown();
-      });
     }
     onChangeCustomFont(event) {
       const value = event.target.checked;
@@ -133,8 +92,64 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
         this.state.defaultColor = false;
       }
     }
+    onChangeText(event) {
+      const value = event.target.value;
+      console.log(value);
+      if (value) {
+        this.state.value.text = value;
+      } else {
+        this.state.value.text = "";
+      }
+    }
+    onChangeColor(event) {
+      if (!this.state.defaultColor) {
+        const color = event.target.value;
+        if (color) {
+          this.state.value.color = color;
+        }
+      }
+    }
+    onChangeBold(event) {
+      const bold = event.target.checked;
+      if (bold) {
+        this.state.value.bold = true;
+      }
+    }
+    onChangeItalic(event) {
+      const italic = event.target.checked;
+      if (italic) {
+        this.state.value.italic = true;
+      }
+    }
+    onChangeUnderlined(event) {
+      const underlined = event.target.checked;
+      if (underlined) {
+        this.state.value.underlined = true;
+      }
+    }
+    onChangeStrikethrough(event) {
+      const strikethrough = event.target.checked;
+      if (strikethrough) {
+        this.state.value.strikethrough = true;
+      }
+    }
+    onChangeObfuscated(event) {
+      const obfuscated = event.target.checked;
+      if (obfuscated) {
+        this.state.value.obfuscated = true;
+      }
+    }
+    onChangeFont(event) {
+      if (this.state.customFont) {
+        const font = event.target.value;
+        if (font) {
+          this.state.value.font = font;
+        }
+      }
+    }
     onClickSave(event) {
       this.buildValues(event);
+      this.values.push(this.state.value);
       this._dialogRef.comp._close();
     }
     onClickCancel() {
@@ -146,6 +161,16 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
     }
     openLineBreak() {
       console.log("openLineBreak");
+    }
+    onDialogClosed() {
+      console.log("onDialogClosed");
+      this.state.minecraftTellrawHoverEventTextDialog = false;
+    }
+    _reInitDropdown() {
+      console.log("_reInitDropdown");
+      $(document).ready(function () {
+        $(".dropdown-toggle").dropdown();
+      });
     }
   }
 
@@ -173,7 +198,7 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
       this.state.values.push("\n");
       console.log(this.state.values);
     }
-    onDialogClosedModerationDiscard() {
+    onDialogClosed() {
       console.log(this.state.values);
       this.state.minecraftTellrawTextDialog = false;
     }
