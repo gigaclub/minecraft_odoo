@@ -8,31 +8,55 @@
                     <t t-raw="state.text" />
                 </div>
             </div>
-            <div class="row" t-if="mode === 'edit' || state.hoverEvent === 'show_text'">
-                <div class="col">
-                    <button
-            class="btn btn-primary dropdown-toggle"
-            type="button"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
-          >
-                        Add Text
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <t t-if="mode === 'edit' || state.hoverEvent === 'show_text'">
+                <div class="row">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Seq</th>
+                                <th scope="col">Value</th>
+                                <th scope="col">Edit</th>
+                                <th scope="col">Remove</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <t t-foreach="state.values" t-as="value_key">
+                                <tr>
+                                    <td>Seq</td>
+                                    <td t-raw="value_key.text" />
+                                    <td>Edit</td>
+                                    <td>Remove</td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row">
+                    <div class="col">
                         <button
-              class="dropdown-item"
-              name="text"
-              t-on-click="openText"
-            >Text</button>
-                        <button
-              class="dropdown-item"
-              name="lineBreak"
-              t-on-click="openLineBreak"
-            >Line Break</button>
+              class="btn btn-primary dropdown-toggle"
+              type="button"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+                            Add Text
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <button
+                class="dropdown-item"
+                name="text"
+                t-on-click="openText"
+              >Text</button>
+                            <button
+                class="dropdown-item"
+                name="lineBreak"
+                t-on-click="openLineBreak"
+              >Line Break</button>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </t>
         </div>
     </t>
 
@@ -83,7 +107,7 @@
               t-on-change="onChangeDefaultColor"
               t-att-checked="state.value.defaultColor"
             />
-                        <label for="color">Default Color</label>
+                        <label for="default-color">Default Color</label>
                     </div>
                 </div>
                 <t t-if="!state.defaultColor">
