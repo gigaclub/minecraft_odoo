@@ -43,23 +43,6 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
       console.log(this.values);
       console.log(this.state.value);
     }
-    buildValues(event) {
-      const $element = $(event.target.parentElement.parentElement);
-      const clickEvent = $element.find("#click-event").val();
-      if (clickEvent && clickEvent !== "none") {
-        this.state.value.clickEvent = {
-          action: clickEvent,
-          value: $element.find(`[name=${clickEvent}]`).val(),
-        };
-      }
-      const hoverEvent = $element.find("#hover-event").val();
-      if (hoverEvent && hoverEvent !== "none") {
-        this.state.value.hoverEvent = {
-          action: hoverEvent,
-          value: $element.find(`[name=${hoverEvent}]`).val(),
-        };
-      }
-    }
     onChangeClickEvent(event) {
       const value = event.target.value;
       if (value && value !== "none") {
@@ -77,24 +60,13 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
       }
     }
     onChangeCustomFont(event) {
-      const value = event.target.checked;
-      if (value) {
-        this.state.customFont = value;
-      } else {
-        this.state.customFont = false;
-      }
+      this.state.customFont = event.target.checked;
     }
     onChangeDefaultColor(event) {
-      const value = event.target.checked;
-      if (value) {
-        this.state.defaultColor = value;
-      } else {
-        this.state.defaultColor = false;
-      }
+      this.state.defaultColor = event.target.checked;
     }
     onChangeText(event) {
       const value = event.target.value;
-      console.log(value);
       if (value) {
         this.state.value.text = value;
       } else {
@@ -110,34 +82,19 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
       }
     }
     onChangeBold(event) {
-      const bold = event.target.checked;
-      if (bold) {
-        this.state.value.bold = true;
-      }
+      this.state.value.bold = event.target.checked;
     }
     onChangeItalic(event) {
-      const italic = event.target.checked;
-      if (italic) {
-        this.state.value.italic = true;
-      }
+      this.state.value.italic = event.target.checked;
     }
     onChangeUnderlined(event) {
-      const underlined = event.target.checked;
-      if (underlined) {
-        this.state.value.underlined = true;
-      }
+      this.state.value.underlined = event.target.checked;
     }
     onChangeStrikethrough(event) {
-      const strikethrough = event.target.checked;
-      if (strikethrough) {
-        this.state.value.strikethrough = true;
-      }
+      this.state.value.strikethrough = event.target.checked;
     }
     onChangeObfuscated(event) {
-      const obfuscated = event.target.checked;
-      if (obfuscated) {
-        this.state.value.obfuscated = true;
-      }
+      this.state.value.obfuscated = event.target.checked;
     }
     onChangeFont(event) {
       if (this.state.customFont) {
@@ -147,8 +104,25 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
         }
       }
     }
-    onClickSave(event) {
-      this.buildValues(event);
+    onChangeClickEventValue(event) {
+      const clickEvent = this.state.clickEvent;
+      if (clickEvent && clickEvent !== "none") {
+        this.state.value.clickEvent = {
+          action: clickEvent,
+          value: event.target.value,
+        };
+      }
+    }
+    onChangeHoverEventValue(event) {
+      const hoverEvent = this.state.hoverEvent;
+      if (hoverEvent && hoverEvent !== "none") {
+        this.state.value.hoverEvent = {
+          action: hoverEvent,
+          value: event.target.value,
+        };
+      }
+    }
+    onClickSave() {
       this.values.push(this.state.value);
       this._dialogRef.comp._close();
     }

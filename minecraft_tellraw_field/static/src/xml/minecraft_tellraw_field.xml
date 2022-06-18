@@ -215,7 +215,7 @@
                 id="custom-font"
                 name="custom-font"
                 t-on-change="onChangeCustomFont"
-                t-att-checked="state.value.customFont"
+                t-att-checked="state.customFont"
               />
                             <label
                 class="form-check-label"
@@ -264,6 +264,8 @@
                 type="text"
                 class="form-control"
                 t-att-name="state.clickEvent"
+                t-att-value="state.value.clickEvent &amp;&amp; state.value.clickEvent.value  || ''"
+                t-on-change="onChangeClickEventValue"
               />
                         </div>
                     </div>
@@ -302,6 +304,8 @@
                 type="text"
                 class="form-control"
                 t-att-name="state.hoverEvent"
+                t-att-value="state.value.hoverEvent &amp;&amp; state.value.hoverEvent.value || ''"
+                t-on-change="onChangeHoverEventValue"
               />
                         </div>
                     </div>
