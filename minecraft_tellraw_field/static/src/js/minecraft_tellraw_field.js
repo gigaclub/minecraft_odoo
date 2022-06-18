@@ -18,7 +18,11 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
         customFont: false,
         defaultColor: true,
         value: {},
+        previewText: "",
       });
+    }
+    patched() {
+      this._generatePreviewText();
     }
     onChangeCustomFont(event) {
       this.state.customFont = event.target.checked;
@@ -72,6 +76,42 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
     onClickCancel() {
       this._newDialogRef.comp._close();
     }
+    _generatePreviewText() {
+      const value = this.state.value;
+      if (value) {
+        if (value.hasOwnProperty("text")) {
+          const valueSpan = $("<span />");
+          valueSpan.text(value.text);
+          if (value.hasOwnProperty("color")) {
+            valueSpan.css("color", value.color);
+          }
+          if (value.hasOwnProperty("bold")) {
+            valueSpan.css("font-weight", value.bold ? "bold" : "normal");
+          }
+          if (value.hasOwnProperty("italic")) {
+            valueSpan.css("font-style", value.italic ? "italic" : "normal");
+          }
+          if (value.hasOwnProperty("underlined")) {
+            valueSpan.css("text-decoration", value.underlined ? "underline" : "none");
+          }
+          if (value.hasOwnProperty("strikethrough")) {
+            valueSpan.css(
+              "text-decoration",
+              value.strikethrough ? "line-through" : valueSpan.css("text-decoration")
+            );
+          }
+          if (
+            value.hasOwnProperty("underlined") &&
+            value.hasOwnProperty("strikethrough") &&
+            value.underlined &&
+            value.strikethrough
+          ) {
+            valueSpan.css("text-decoration", "underline line-through");
+          }
+          this.state.previewText = valueSpan[0].outerHTML;
+        }
+      }
+    }
   }
 
   Object.assign(MinecraftTellrawHoverEventTextDialog, {
@@ -93,18 +133,13 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
         value: {},
         values: [],
         text: "",
+        previewText: "",
       });
       this._dialogRef = useRef("dialog");
     }
     patched() {
-      this.state.text = this.state.values
-        .map((value) => {
-          if (value.hasOwnProperty("text")) {
-            return value.text;
-          }
-          return value;
-        })
-        .join("");
+      this._generatePreviewText();
+      this._generateText();
       this._reInitDropdown();
     }
     onChangeClickEvent(event) {
@@ -207,6 +242,78 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
         $(".dropdown-toggle").dropdown();
       });
     }
+    _generatePreviewText() {
+      const value = this.state.value;
+      if (value) {
+        if (value.hasOwnProperty("text")) {
+          const valueSpan = $("<span />");
+          valueSpan.text(value.text);
+          if (value.hasOwnProperty("color")) {
+            valueSpan.css("color", value.color);
+          }
+          if (value.hasOwnProperty("bold")) {
+            valueSpan.css("font-weight", value.bold ? "bold" : "normal");
+          }
+          if (value.hasOwnProperty("italic")) {
+            valueSpan.css("font-style", value.italic ? "italic" : "normal");
+          }
+          if (value.hasOwnProperty("underlined")) {
+            valueSpan.css("text-decoration", value.underlined ? "underline" : "none");
+          }
+          if (value.hasOwnProperty("strikethrough")) {
+            valueSpan.css(
+              "text-decoration",
+              value.strikethrough ? "line-through" : valueSpan.css("text-decoration")
+            );
+          }
+          if (
+            value.hasOwnProperty("underlined") &&
+            value.hasOwnProperty("strikethrough") &&
+            value.underlined &&
+            value.strikethrough
+          ) {
+            valueSpan.css("text-decoration", "underline line-through");
+          }
+          this.state.previewText = valueSpan[0].outerHTML;
+        }
+      }
+    }
+    _generateText() {
+      this.state.text = this.state.values
+        .map((value) => {
+          if (value.hasOwnProperty("text")) {
+            const valueSpan = $("<span />");
+            valueSpan.text(value.text);
+            if (value.hasOwnProperty("color")) {
+              valueSpan.css("color", value.color);
+            }
+            if (value.hasOwnProperty("bold")) {
+              valueSpan.css("font-weight", value.bold ? "bold" : "normal");
+            }
+            if (value.hasOwnProperty("italic")) {
+              valueSpan.css("font-style", value.italic ? "italic" : "normal");
+            }
+            if (value.hasOwnProperty("underlined")) {
+              valueSpan.css("text-decoration", value.underlined ? "underline" : "none");
+            }
+            if (value.hasOwnProperty("strikethrough")) {
+              valueSpan.css(
+                "text-decoration",
+                value.strikethrough ? "line-through" : "none"
+              );
+            }
+            if (
+              value.hasOwnProperty("underlined") &&
+              value.hasOwnProperty("strikethrough")
+            ) {
+              valueSpan.css("text-decoration", "underline line-through");
+            }
+            return valueSpan[0].outerHTML;
+          }
+          return value;
+        })
+        .join("");
+    }
   }
 
   Object.assign(MinecraftTellrawDialog, {
@@ -227,11 +334,11 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
       });
       if (this.value.values) {
         this.state.values = this.value.values;
-        this._renderText();
+        this._generateText();
       }
     }
     patched() {
-      this._renderText();
+      this._generateText();
       const val = {values: this.state.values};
       this._setValue(val);
     }
@@ -270,11 +377,37 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
         });
       });
     }
-    _renderText() {
+    _generateText() {
       this.state.text = this.state.values
         .map((value) => {
           if (value.hasOwnProperty("text")) {
-            return value.text;
+            const valueSpan = $("<span />");
+            valueSpan.text(value.text);
+            if (value.hasOwnProperty("color")) {
+              valueSpan.css("color", value.color);
+            }
+            if (value.hasOwnProperty("bold")) {
+              valueSpan.css("font-weight", value.bold ? "bold" : "normal");
+            }
+            if (value.hasOwnProperty("italic")) {
+              valueSpan.css("font-style", value.italic ? "italic" : "normal");
+            }
+            if (value.hasOwnProperty("underlined")) {
+              valueSpan.css("text-decoration", value.underlined ? "underline" : "none");
+            }
+            if (value.hasOwnProperty("strikethrough")) {
+              valueSpan.css(
+                "text-decoration",
+                value.strikethrough ? "line-through" : "none"
+              );
+            }
+            if (
+              value.hasOwnProperty("underlined") &&
+              value.hasOwnProperty("strikethrough")
+            ) {
+              valueSpan.css("text-decoration", "underline line-through");
+            }
+            return valueSpan[0].outerHTML;
           }
           return value;
         })
