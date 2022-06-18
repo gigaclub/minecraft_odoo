@@ -67,14 +67,6 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
     }
     onClickSave() {
       this.__owl__.parent.state.values.push(this.state.value);
-      this.__owl__.parent.state.text = this.__owl__.parent.state.values
-        .map((value) => {
-          if (value.hasOwnProperty("text")) {
-            return value.text;
-          }
-          return value;
-        })
-        .join("");
       this._newDialogRef.comp._close();
     }
     onClickCancel() {
@@ -105,6 +97,14 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
       this._dialogRef = useRef("dialog");
     }
     patched() {
+      this.state.text = this.state.values
+        .map((value) => {
+          if (value.hasOwnProperty("text")) {
+            return value.text;
+          }
+          return value;
+        })
+        .join("");
       this._reInitDropdown();
     }
     onChangeClickEvent(event) {
@@ -188,14 +188,6 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
     }
     onClickSave() {
       this.__owl__.parent.state.values.push(this.state.value);
-      this.__owl__.parent.state.text = this.__owl__.parent.state.values
-        .map((value) => {
-          if (value.hasOwnProperty("text")) {
-            return value.text;
-          }
-          return value;
-        })
-        .join("");
       this.__owl__.parent.state.minecraftTellrawTextDialog = false;
     }
     onClickCancel() {
@@ -206,15 +198,6 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
     }
     openLineBreak() {
       this.state.values.push("\n");
-      this.state.text = this.state.values
-        .map((value) => {
-          console.log(value);
-          if (value.hasOwnProperty("text")) {
-            return value.text;
-          }
-          return value;
-        })
-        .join("");
     }
     onDialogClosed() {
       this.state.minecraftTellrawHoverEventTextDialog = false;
@@ -242,26 +225,60 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
         values: [""],
         text: "",
       });
+      if (this.value.values) {
+        this.state.values = this.value.values;
+        this._renderText();
+      }
+    }
+    patched() {
+      this._renderText();
+      const val = {values: this.state.values};
+      this._setValue(val);
     }
     openText() {
       this.state.minecraftTellrawTextDialog = true;
     }
     openLineBreak() {
       this.state.values.push("\n");
+    }
+    // Buggy if you want to close the dialog if you opened a second one before
+    onDialogClosed() {
+      this.state.minecraftTellrawTextDialog = false;
+    }
+    _setValue(value, options) {
+      // We try to avoid doing useless work, if the value given has not changed.
+      if (this._isLastSetValue(value)) {
+        return Promise.resolve();
+      }
+      this._lastSetValue = value;
+      this._isValid = true;
+      if (!(options && options.forceChange) && this._isSameValue(value)) {
+        return Promise.resolve();
+      }
+      return new Promise((resolve, reject) => {
+        const changes = {};
+        changes[this.name] = value;
+        this.trigger("field-changed", {
+          dataPointID: this.dataPointId,
+          changes: changes,
+          viewType: this.viewType,
+          doNotSetDirty: options && options.doNotSetDirty,
+          notifyChange: !options || options.notifyChange !== false,
+          allowWarning: options && options.allowWarning,
+          onSuccess: resolve,
+          onFailure: reject,
+        });
+      });
+    }
+    _renderText() {
       this.state.text = this.state.values
         .map((value) => {
-          console.log(value);
           if (value.hasOwnProperty("text")) {
             return value.text;
           }
           return value;
         })
         .join("");
-      console.log(this.state.values);
-    }
-    // Buggy if you want to close the dialog if you opened a second one before
-    onDialogClosed() {
-      this.state.minecraftTellrawTextDialog = false;
     }
   }
 
