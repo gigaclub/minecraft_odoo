@@ -13,7 +13,7 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
   class MinecraftTellrawHoverEventTextDialog extends Component {
     constructor(props) {
       super(props);
-      this._dialogRef = useRef("dialog");
+      this._newDialogRef = useRef("newDialog");
       this.state = useState({
         customFont: false,
         defaultColor: true,
@@ -66,10 +66,10 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
       }
     }
     onClickSave() {
-      this._dialogRef.comp._close();
+      this._newDialogRef.comp._close();
     }
     onClickCancel() {
-      this._dialogRef.comp._close();
+      this._newDialogRef.comp._close();
     }
   }
 
@@ -83,7 +83,6 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
   class MinecraftTellrawDialog extends Component {
     constructor(...args) {
       super(...args);
-      this._dialogRef = useRef("dialog");
       this.state = useState({
         clickEvent: false,
         hoverEvent: false,
@@ -93,6 +92,7 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
         value: {},
       });
       this.values = this.__owl__.parent.state.values;
+      this._dialogRef = useRef("dialog");
     }
     patched() {
       this._reInitDropdown();
@@ -177,12 +177,11 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
       }
     }
     onClickSave() {
-      console.log(this.state.value);
       this.values.push(this.state.value);
-      this._dialogRef.comp._close();
+      this.__owl__.parent.state.minecraftTellrawTextDialog = false;
     }
     onClickCancel() {
-      this._dialogRef.comp._close();
+      this.__owl__.parent.state.minecraftTellrawTextDialog = false;
     }
     openText() {
       this.state.minecraftTellrawHoverEventTextDialog = true;
@@ -216,16 +215,15 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
         values: [""],
       });
     }
-    openText(event) {
-      event.preventDefault();
+    openText() {
       this.state.minecraftTellrawTextDialog = true;
     }
     openLineBreak() {
       this.state.values.push("\n");
       console.log(this.state.values);
     }
+    // Buggy if you want to close the dialog if you opened a second one before
     onDialogClosed() {
-      console.log(this.state.values);
       this.state.minecraftTellrawTextDialog = false;
     }
   }

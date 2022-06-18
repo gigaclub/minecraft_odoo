@@ -333,7 +333,7 @@
       contentClass="'o_MinecraftTellrawHoverEventTextDialog'"
       title="AddText"
       size="'large'"
-      t-ref="dialog"
+      t-ref="newDialog"
     >
             <t t-call="MinecraftTellrawText" />
             <t t-set-slot="buttons">
