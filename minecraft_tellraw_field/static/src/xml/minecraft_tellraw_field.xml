@@ -2,7 +2,13 @@
 <templates id="minecraft_tellraw_field_templates" xml:space="preserve">
 
     <t t-name="MinecraftTellrawDropdown" owl="1">
+
         <div class="dropdown">
+            <div class="row">
+                <div class="col">
+                    <span style="white-space: pre-line" t-esc="state.text" />
+                </div>
+            </div>
             <div class="row">
                 <div class="col">
                     <button

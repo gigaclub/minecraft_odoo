@@ -66,6 +66,15 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
       }
     }
     onClickSave() {
+      this.__owl__.parent.state.values.push(this.state.value);
+      this.__owl__.parent.state.text = this.__owl__.parent.state.values
+        .map((value) => {
+          if (value.hasOwnProperty("text")) {
+            return value.text;
+          }
+          return value;
+        })
+        .join("");
       this._newDialogRef.comp._close();
     }
     onClickCancel() {
@@ -90,8 +99,9 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
         defaultColor: true,
         minecraftTellrawHoverEventTextDialog: false,
         value: {},
+        values: [],
+        text: "",
       });
-      this.values = this.__owl__.parent.state.values;
       this._dialogRef = useRef("dialog");
     }
     patched() {
@@ -177,7 +187,15 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
       }
     }
     onClickSave() {
-      this.values.push(this.state.value);
+      this.__owl__.parent.state.values.push(this.state.value);
+      this.__owl__.parent.state.text = this.__owl__.parent.state.values
+        .map((value) => {
+          if (value.hasOwnProperty("text")) {
+            return value.text;
+          }
+          return value;
+        })
+        .join("");
       this.__owl__.parent.state.minecraftTellrawTextDialog = false;
     }
     onClickCancel() {
@@ -187,7 +205,16 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
       this.state.minecraftTellrawHoverEventTextDialog = true;
     }
     openLineBreak() {
-      console.log("lineBreak");
+      this.state.values.push("\n");
+      this.state.text = this.state.values
+        .map((value) => {
+          console.log(value);
+          if (value.hasOwnProperty("text")) {
+            return value.text;
+          }
+          return value;
+        })
+        .join("");
     }
     onDialogClosed() {
       this.state.minecraftTellrawHoverEventTextDialog = false;
@@ -213,6 +240,7 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
       this.state = useState({
         minecraftTellrawTextDialog: false,
         values: [""],
+        text: "",
       });
     }
     openText() {
@@ -220,6 +248,15 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
     }
     openLineBreak() {
       this.state.values.push("\n");
+      this.state.text = this.state.values
+        .map((value) => {
+          console.log(value);
+          if (value.hasOwnProperty("text")) {
+            return value.text;
+          }
+          return value;
+        })
+        .join("");
       console.log(this.state.values);
     }
     // Buggy if you want to close the dialog if you opened a second one before
