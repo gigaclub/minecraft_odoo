@@ -24,8 +24,12 @@
                                 <tr>
                                     <td>Seq</td>
                                     <td t-raw="value_key.text" />
-                                    <td>Edit</td>
-                                    <td>Remove</td>
+                                    <td><button
+                      t-on-click="onClickEditText(value_key_index)"
+                    >Edit</button></td>
+                                    <td><button
+                      t-on-click="onClickRemoveText(value_key_index)"
+                    >Remove</button></td>
                                 </tr>
                             </t>
                         </tbody>

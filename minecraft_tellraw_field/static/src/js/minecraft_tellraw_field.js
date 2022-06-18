@@ -228,6 +228,12 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
     onClickCancel() {
       this.__owl__.parent.state.minecraftTellrawTextDialog = false;
     }
+    onClickRemoveText(index) {
+      this.state.values.splice(index, 1);
+    }
+    onClickEditText(index) {
+      console.log(index);
+    }
     openText() {
       this.state.minecraftTellrawHoverEventTextDialog = true;
     }
@@ -341,6 +347,12 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
       this._generateText();
       const val = {values: this.state.values};
       this._setValue(val);
+    }
+    onClickRemoveText(index) {
+      this.state.values.splice(index, 1);
+    }
+    onClickEditText(index) {
+      console.log(index);
     }
     openText() {
       this.state.minecraftTellrawTextDialog = true;
