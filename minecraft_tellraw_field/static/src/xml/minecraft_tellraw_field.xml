@@ -21,16 +21,19 @@
                             </thead>
                             <tbody>
                             <t t-foreach="state.values" t-as="value_key">
-                                <tr>
-                                    <td>Seq</td>
-                                    <td t-raw="value_key.text" />
-                                    <td><button
-                      t-on-click="onClickEditText(value_key_index)"
-                    >Edit</button></td>
-                                    <td><button
-                      t-on-click="onClickRemoveText(value_key_index)"
-                    >Remove</button></td>
-                                </tr>
+                                <t t-if="value_key_index !== 0">
+                                    <tr>
+                                        <td>Seq</td>
+                                        <td t-raw="value_key.text" />
+                                        <td><button
+                        t-if="value_key !== '\n'"
+                        t-on-click="onClickEditText(value_key_index)"
+                      >Edit</button></td>
+                                        <td><button
+                        t-on-click="onClickRemoveText(value_key_index)"
+                      >Remove</button></td>
+                                    </tr>
+                                </t>
                             </t>
                         </tbody>
                     </table>
@@ -264,7 +267,10 @@
     <t t-name="FieldMinecraftTellraw" owl="1">
         <t t-call="MinecraftTellrawDropdown" />
         <t t-if="state.minecraftTellrawTextDialog">
-            <MinecraftTellrawDialog t-on-dialog-closed="onDialogClosed" />
+            <MinecraftTellrawDialog
+        editValue="editValue"
+        t-on-dialog-closed="onDialogClosed"
+      />
         </t>
     </t>
 
@@ -362,7 +368,10 @@
             </t>
         </Dialog>
         <t t-if="state.minecraftTellrawHoverEventTextDialog">
-            <MinecraftTellrawHoverEventTextDialog t-on-dialog-closed="onDialogClosed" />
+            <MinecraftTellrawHoverEventTextDialog
+        editValue="editValue"
+        t-on-dialog-closed="onDialogClosed"
+      />
         </t>
     </t>
 

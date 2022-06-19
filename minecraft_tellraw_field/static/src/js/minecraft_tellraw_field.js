@@ -11,8 +11,8 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
   const {useState, useRef} = owl.hooks;
 
   class MinecraftTellrawHoverEventTextDialog extends Component {
-    constructor(props) {
-      super(props);
+    constructor(...args) {
+      super(...args);
       this._newDialogRef = useRef("newDialog");
       this.state = useState({
         customFont: false,
@@ -20,6 +20,9 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
         value: {},
         previewText: "",
       });
+      if (this.props.editValue) {
+        this.state.value = this.props.editValue;
+      }
     }
     patched() {
       this._generatePreviewText();
@@ -118,6 +121,7 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
     components: {
       Dialog: OwlDialog,
     },
+    editValue: Object,
     template: "MinecraftTellrawHoverEventTextDialog",
   });
 
@@ -135,7 +139,12 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
         text: "",
         previewText: "",
       });
+      this.editValue = {};
       this._dialogRef = useRef("dialog");
+      console.log(this.props);
+      if (this.props.editValue) {
+        this.state.value = this.props.editValue;
+      }
     }
     patched() {
       this._generatePreviewText();
@@ -232,7 +241,8 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
       this.state.values.splice(index, 1);
     }
     onClickEditText(index) {
-      console.log(index);
+      this.editValue = this.state.values[index];
+      this.state.minecraftTellrawHoverEventTextDialog = true;
     }
     openText() {
       this.state.minecraftTellrawHoverEventTextDialog = true;
@@ -327,6 +337,7 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
       Dialog: OwlDialog,
       MinecraftTellrawHoverEventTextDialog,
     },
+    editValue: Object,
     template: "FieldMinecraftTellrawText",
   });
 
@@ -338,6 +349,7 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
         values: [""],
         text: "",
       });
+      this.editValue = {};
       if (this.value.values) {
         this.state.values = this.value.values;
         this._generateText();
@@ -352,7 +364,8 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
       this.state.values.splice(index, 1);
     }
     onClickEditText(index) {
-      console.log(index);
+      this.editValue = this.state.values[index];
+      this.state.minecraftTellrawTextDialog = true;
     }
     openText() {
       this.state.minecraftTellrawTextDialog = true;
