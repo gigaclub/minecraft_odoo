@@ -21,7 +21,9 @@
                             </thead>
                             <tbody>
                             <t t-foreach="state.values" t-as="value_key">
-                                <t t-if="value_key_index !== 0">
+                                <t
+                  t-if="state.values[0] !== '' || value_key_index !== 0"
+                >
                                     <tr>
                                         <td>Seq</td>
                                         <td t-raw="value_key.text" />
@@ -268,7 +270,7 @@
         <t t-call="MinecraftTellrawDropdown" />
         <t t-if="state.minecraftTellrawTextDialog">
             <MinecraftTellrawDialog
-        editValue="editValue"
+        editValue="state.editValue"
         t-on-dialog-closed="onDialogClosed"
       />
         </t>
@@ -369,7 +371,7 @@
         </Dialog>
         <t t-if="state.minecraftTellrawHoverEventTextDialog">
             <MinecraftTellrawHoverEventTextDialog
-        editValue="editValue"
+        editValue="state.editValue"
         t-on-dialog-closed="onDialogClosed"
       />
         </t>

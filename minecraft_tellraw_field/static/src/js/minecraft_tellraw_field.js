@@ -20,8 +20,10 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
         value: {},
         previewText: "",
       });
-      if (this.props.editValue) {
-        this.state.value = this.props.editValue;
+    }
+    mounted() {
+      if (Object.keys(this.props.editValue).length) {
+        this._setEditValue(this.props.editValue);
       }
     }
     patched() {
@@ -115,6 +117,10 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
         }
       }
     }
+    _setEditValue(value) {
+      this.state.value = value;
+      this.__owl__.parent.state.editValue = {};
+    }
   }
 
   Object.assign(MinecraftTellrawHoverEventTextDialog, {
@@ -138,12 +144,13 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
         values: [],
         text: "",
         previewText: "",
+        editValue: {},
       });
-      this.editValue = {};
       this._dialogRef = useRef("dialog");
-      console.log(this.props);
-      if (this.props.editValue) {
-        this.state.value = this.props.editValue;
+    }
+    mounted() {
+      if (Object.keys(this.props.editValue).length) {
+        this._setEditValue(this.props.editValue);
       }
     }
     patched() {
@@ -241,7 +248,7 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
       this.state.values.splice(index, 1);
     }
     onClickEditText(index) {
-      this.editValue = this.state.values[index];
+      this.state.editValue = this.state.values[index];
       this.state.minecraftTellrawHoverEventTextDialog = true;
     }
     openText() {
@@ -330,6 +337,10 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
         })
         .join("");
     }
+    _setEditValue(value) {
+      this.state.value = value;
+      this.__owl__.parent.state.editValue = {};
+    }
   }
 
   Object.assign(MinecraftTellrawDialog, {
@@ -348,8 +359,8 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
         minecraftTellrawTextDialog: false,
         values: [""],
         text: "",
+        editValue: {},
       });
-      this.editValue = {};
       if (this.value.values) {
         this.state.values = this.value.values;
         this._generateText();
@@ -364,7 +375,7 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
       this.state.values.splice(index, 1);
     }
     onClickEditText(index) {
-      this.editValue = this.state.values[index];
+      this.state.editValue = this.state.values[index];
       this.state.minecraftTellrawTextDialog = true;
     }
     openText() {
