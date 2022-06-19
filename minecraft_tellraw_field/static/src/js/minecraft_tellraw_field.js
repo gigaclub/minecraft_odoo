@@ -162,6 +162,19 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
       this._generatePreviewText();
       this._generateText();
       this._reInitDropdown();
+      $("table tbody").sortable({
+        handle: "span.o_row_handle",
+        cancel: "",
+        start: (e, ui) => {
+          $(this).attr("data-previndex", ui.item.index());
+        },
+        update: (e, ui) => {
+          const oldIndex = $(this).attr("data-previndex");
+          const newIndex = ui.item.index();
+          $(this).removeAttr("data-previndex");
+          this._updateIndex(oldIndex + 1, newIndex + 1);
+        },
+      });
     }
     onChangeClickEvent(event) {
       const value = event.target.value;
@@ -367,6 +380,16 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
       }
       this.__owl__.parent.state.editValue = {};
     }
+    _updateIndex(oldIndex, newIndex) {
+      const values = this.state.values;
+      const value = values[oldIndex];
+      values.splice(oldIndex, 1);
+      values.splice(newIndex, 0, value);
+      this.state.values = values;
+      // Close dialog because the index changed and the old index is no longer valid
+      // should be solved by a better solution
+      this.onClickSave();
+    }
   }
 
   Object.assign(MinecraftTellrawDialog, {
@@ -393,6 +416,21 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
         this._generateText();
       }
       this.lastValue = undefined;
+    }
+    mounted() {
+      $("table tbody").sortable({
+        handle: "span.o_row_handle",
+        cancel: "",
+        start: (e, ui) => {
+          $(this).attr("data-previndex", ui.item.index());
+        },
+        update: (e, ui) => {
+          const oldIndex = $(this).attr("data-previndex");
+          const newIndex = ui.item.index();
+          $(this).removeAttr("data-previndex");
+          this._updateIndex(oldIndex + 1, newIndex + 1);
+        },
+      });
     }
     patched() {
       this._generateText();
@@ -482,6 +520,14 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
           return value;
         })
         .join("");
+    }
+    _updateIndex(oldIndex, newIndex) {
+      const values = this.state.values;
+      const value = values[oldIndex];
+      values.splice(oldIndex, 1);
+      values.splice(newIndex, 0, value);
+      this.state.values = values;
+      this.trigger("reload");
     }
   }
 

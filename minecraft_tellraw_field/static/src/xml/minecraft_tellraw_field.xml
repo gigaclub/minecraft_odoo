@@ -23,7 +23,10 @@
                             <t t-foreach="state.values" t-as="value_key">
                                 <t t-if="value_key_index !== 0">
                                     <tr>
-                                        <td>Seq</td>
+                                        <td><span
+                        style="cursor: move;margin-left: 10px;"
+                        class="o_row_handle fa fa-arrows ui-sortable-handle"
+                      /></td>
                                         <td t-raw="value_key.text" />
                                         <td><button
                         t-if="value_key !== '\n'"
