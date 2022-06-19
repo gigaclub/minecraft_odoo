@@ -21,9 +21,7 @@
                             </thead>
                             <tbody>
                             <t t-foreach="state.values" t-as="value_key">
-                                <t
-                  t-if="state.values[0] !== '' || value_key_index !== 0"
-                >
+                                <t t-if="value_key_index !== 0">
                                     <tr>
                                         <td>Seq</td>
                                         <td t-raw="value_key.text" />
@@ -144,7 +142,7 @@
                   class="form-check-input"
                   id="bold"
                   name="bold"
-                  t-on-change="onChangeBold"
+                  t-on-change="(event) => state.value.bold = event.target.checked"
                   t-att-checked="state.value.bold"
                 />
                                 <label class="form-check-label" for="bold">Bold</label>
@@ -371,6 +369,7 @@
         </Dialog>
         <t t-if="state.minecraftTellrawHoverEventTextDialog">
             <MinecraftTellrawHoverEventTextDialog
+        index="state.index"
         editValue="state.editValue"
         t-on-dialog-closed="onDialogClosed"
       />

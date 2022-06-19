@@ -20,10 +20,8 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
         value: {},
         previewText: "",
       });
-    }
-    mounted() {
       if (Object.keys(this.props.editValue).length) {
-        this._setEditValue(this.props.editValue);
+        this._setEditValue(this.props.editValue, this.props.index);
       }
     }
     patched() {
@@ -75,7 +73,9 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
       }
     }
     onClickSave() {
-      if (!this.__owl__.parent.state.fromEdit) {
+      if (this.__owl__.parent.state.fromEdit) {
+        this.__owl__.parent.state.values[this.index] = this.state.value;
+      } else {
         this.__owl__.parent.state.values.push(this.state.value);
       }
       this.__owl__.parent.state.fromEdit = false;
@@ -120,9 +120,9 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
         }
       }
     }
-    _setEditValue(value) {
-      this.state.value = value;
-      this.__owl__.parent.state.editValue = {};
+    _setEditValue(value, index) {
+      this.index = index;
+      this.state.value = Object.assign({}, value);
     }
   }
 
@@ -144,11 +144,12 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
         defaultColor: true,
         minecraftTellrawHoverEventTextDialog: false,
         value: {},
-        values: [],
+        values: [""],
         text: "",
         previewText: "",
         editValue: {},
         fromEdit: false,
+        index: 0,
       });
       this._dialogRef = useRef("dialog");
     }
@@ -242,6 +243,12 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
       }
     }
     onClickSave() {
+      if (this.state.hoverEvent === "show_text") {
+        this.state.value.hoverEvent = {
+          action: this.state.hoverEvent,
+          value: this.state.values,
+        };
+      }
       if (!this.__owl__.parent.state.fromEdit) {
         this.__owl__.parent.state.values.push(this.state.value);
       }
@@ -257,6 +264,7 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
     onClickEditText(index) {
       this.state.fromEdit = true;
       this.state.editValue = this.state.values[index];
+      this.state.index = index;
       this.state.minecraftTellrawHoverEventTextDialog = true;
     }
     openText() {
@@ -266,6 +274,7 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
       this.state.values.push("\n");
     }
     onDialogClosed() {
+      this.state.editValue = {};
       this.state.minecraftTellrawHoverEventTextDialog = false;
     }
     _reInitDropdown() {
@@ -349,6 +358,9 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
       this.state.value = value;
       if (value.hasOwnProperty("hoverEvent")) {
         this.state.hoverEvent = value.hoverEvent.action;
+        if (value.hoverEvent.action === "show_text") {
+          this.state.values = value.hoverEvent.value;
+        }
       }
       if (value.hasOwnProperty("clickEvent")) {
         this.state.clickEvent = value.clickEvent.action;
@@ -380,11 +392,17 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
         this.state.values = this.value.values;
         this._generateText();
       }
+      this.lastValue = undefined;
     }
     patched() {
       this._generateText();
       const val = {values: this.state.values};
-      this._setValue(val);
+      const isEqual = (...objects) =>
+        objects.every((obj) => JSON.stringify(obj) === JSON.stringify(objects[0]));
+      if (!isEqual(this.lastValue, val)) {
+        this._setValue(val);
+        this.lastValue = val;
+      }
     }
     onClickRemoveText(index) {
       this.state.values.splice(index, 1);
