@@ -6,6 +6,10 @@
             <xpath expr="." position="inside">
                 <script
           type="text/javascript"
+          src="/minecraft_tellraw_field/static/src/js/field_utils.js"
+        />
+                <script
+          type="text/javascript"
           src="/minecraft_tellraw_field/static/src/js/minecraft_tellraw_field.js"
         />
                 <script
