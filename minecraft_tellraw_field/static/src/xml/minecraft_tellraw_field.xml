@@ -52,7 +52,11 @@
             >
                             Add Text
                         </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <div
+              class="dropdown-menu"
+              aria-labelledby="dropdownMenuLink"
+              id="add-text-dropdown"
+            >
                             <button
                 class="dropdown-item"
                 name="text"
