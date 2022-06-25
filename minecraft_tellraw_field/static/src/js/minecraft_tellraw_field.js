@@ -542,5 +542,7 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
 
   return {
     MinecraftTellrawField: MinecraftTellrawField,
+    MinecraftTellrawDialog: MinecraftTellrawDialog,
+    MinecraftTellrawHoverEventTextDialog: MinecraftTellrawHoverEventTextDialog,
   };
 });
