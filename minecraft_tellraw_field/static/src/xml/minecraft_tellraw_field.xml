@@ -272,13 +272,17 @@
     </t>
 
     <t t-name="FieldMinecraftTellraw" owl="1">
+        <!--grepper odoo call template-->
         <t t-call="MinecraftTellrawDropdown" />
+        <!--end grepper-->
+        <!--grepper odoo owl open dialog-->
         <t t-if="state.minecraftTellrawTextDialog">
             <MinecraftTellrawDialog
         editValue="state.editValue"
         t-on-dialog-closed="onDialogClosed"
       />
         </t>
+        <!--end grepper-->
     </t>
 
     <t t-name="FieldMinecraftTellrawText" owl="1">

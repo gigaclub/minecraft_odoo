@@ -2,6 +2,7 @@
 <odoo>
     <data>
 
+        <!--grepper odoo register javascript-->
         <template
       id="assets_backend_inherit_minecraft_tellraw_field"
       inherit_id="web.assets_backend"
@@ -21,6 +22,7 @@
         />
             </xpath>
         </template>
+        <!--end grepper-->
 
     </data>
 </odoo>

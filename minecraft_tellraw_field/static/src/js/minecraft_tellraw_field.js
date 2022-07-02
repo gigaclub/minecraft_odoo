@@ -14,12 +14,14 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
     constructor(...args) {
       super(...args);
       this._newDialogRef = useRef("newDialog");
+      // Grepper odoo owl usestate
       this.state = useState({
         customFont: false,
         defaultColor: true,
         value: {},
         previewText: "",
       });
+      // End grepper
       if (Object.keys(this.props.editValue).length) {
         this._setEditValue(this.props.editValue, this.props.index);
       }
@@ -443,7 +445,9 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
       }
     }
     onClickRemoveText(index) {
+      // Grepper js remove item on index
       this.state.values.splice(index, 1);
+      // End grepper
     }
     onClickEditText(index) {
       this.state.fromEdit = true;
@@ -527,7 +531,9 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
       values.splice(oldIndex, 1);
       values.splice(newIndex, 0, value);
       this.state.values = values;
+      // Grepper odoo js reload widget
       this.trigger("reload");
+      // End grepper
     }
   }
 
