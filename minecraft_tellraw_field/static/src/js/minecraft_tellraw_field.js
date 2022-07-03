@@ -437,10 +437,14 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
     patched() {
       this._generateText();
       const val = {values: this.state.values};
+      // Grepper js compare objects
       const isEqual = (...objects) =>
         objects.every((obj) => JSON.stringify(obj) === JSON.stringify(objects[0]));
       if (!isEqual(this.lastValue, val)) {
+        // End grepper
+        // grepper odoo field set value
         this._setValue(val);
+        // End grepper
         this.lastValue = val;
       }
     }
