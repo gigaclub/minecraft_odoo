@@ -387,6 +387,7 @@
         </t>
     </t>
 
+    <!-- grepper odoo owl dialog template -->
     <t t-name="MinecraftTellrawHoverEventTextDialog" owl="1">
         <Dialog
       contentClass="'o_MinecraftTellrawHoverEventTextDialog'"
@@ -407,5 +408,6 @@
             </t>
         </Dialog>
     </t>
+    <!-- end grepper -->
 
 </templates>
