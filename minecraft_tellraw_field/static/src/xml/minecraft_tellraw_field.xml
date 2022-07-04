@@ -367,6 +367,7 @@
                     </div>
                 </t>
             </div>
+            <!--grepper owl dialog buttons-->
             <t t-set-slot="buttons">
                 <button
           class="o-reject btn btn-primary"
@@ -377,6 +378,7 @@
           t-on-click="onClickCancel"
         >Cancel</button>
             </t>
+            <!--end grepper-->
         </Dialog>
         <t t-if="state.minecraftTellrawHoverEventTextDialog">
             <MinecraftTellrawHoverEventTextDialog
