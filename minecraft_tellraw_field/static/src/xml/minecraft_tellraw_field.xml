@@ -33,6 +33,7 @@
                         t-on-click="onClickEditText(value_key_index)"
                       >Edit</button></td>
                                         <td><button
+                        t-if="!value_key.listitem"
                         t-on-click="onClickRemoveText(value_key_index)"
                       >Remove</button></td>
                                     </tr>
