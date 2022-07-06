@@ -420,19 +420,21 @@ odoo.define("minecraft_tellraw_field.minecraft_tellraw_field", function (require
       this.lastValue = undefined;
     }
     mounted() {
-      $("table tbody").sortable({
-        handle: "span.o_row_handle",
-        cancel: "",
-        start: (e, ui) => {
-          $(this).attr("data-previndex", ui.item.index());
-        },
-        update: (e, ui) => {
-          const oldIndex = $(this).attr("data-previndex");
-          const newIndex = ui.item.index();
-          $(this).removeAttr("data-previndex");
-          this._updateIndex(oldIndex + 1, newIndex + 1);
-        },
-      });
+      $(this.el)
+        .find("table tbody.dropdown-values")
+        .sortable({
+          handle: "span.o_row_handle",
+          cancel: "",
+          start: (e, ui) => {
+            $(this).attr("data-previndex", ui.item.index());
+          },
+          update: (e, ui) => {
+            const oldIndex = $(this).attr("data-previndex");
+            const newIndex = ui.item.index();
+            $(this).removeAttr("data-previndex");
+            this._updateIndex(oldIndex + 1, newIndex + 1);
+          },
+        });
     }
     patched() {
       this._generateText();

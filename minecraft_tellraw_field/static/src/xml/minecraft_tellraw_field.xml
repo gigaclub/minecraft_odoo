@@ -19,7 +19,7 @@
                                 <th scope="col">Remove</th>
                             </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="dropdown-values">
                             <t t-foreach="state.values" t-as="value_key">
                                 <t t-if="value_key_index !== 0">
                                     <tr>
