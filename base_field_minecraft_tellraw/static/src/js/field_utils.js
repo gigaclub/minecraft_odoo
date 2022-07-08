@@ -1,4 +1,4 @@
-odoo.define("minecraft_tellraw_field.field_utils", function (require) {
+odoo.define("base_field_minecraft_tellraw.field_utils", function (require) {
   "use strict";
 
   require("web.field_utils").format.serialized = function (value) {
