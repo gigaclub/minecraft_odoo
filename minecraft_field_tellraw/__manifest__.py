@@ -1,5 +1,5 @@
 {
-    "name": "Minecraft Tellraw Field",
+    "name": "Minecraft Field Tellraw",
     "version": "14.0.1.0.0",
     "category": "Minecraft",
     "author": "GigaClub.net",

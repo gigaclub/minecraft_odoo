@@ -1,4 +1,4 @@
-odoo.define("base_field_minecraft_tellraw.minecraft_tellraw_field", function (require) {
+odoo.define("minecraft_field_tellraw.minecraft_tellraw_field", function (require) {
   "use strict";
 
   const AbstractFieldOwl = require("web.AbstractFieldOwl");
