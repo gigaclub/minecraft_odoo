@@ -7,8 +7,7 @@ odoo.define("minecraft_field_tellraw.minecraft_tellraw_field", function (require
 
   const _lt = core._lt;
 
-  const {Component} = owl;
-  const {useState, useRef} = owl.hooks;
+  const {Component, useState, useRef} = owl;
 
   class MinecraftTellrawHoverEventTextDialog extends Component {
     constructor(...args) {
